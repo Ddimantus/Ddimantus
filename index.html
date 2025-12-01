@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прямоугольник с изображением</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+        }
+		
+		.hello-world {
+            position: fixed;
+            top: 10%; /* Отступ сверху */
+            left: 50%; /* Начинаем с середины */
+            transform: translateX(-50%); /* Сдвигаем назад на половину своей ширины */
+            font-size: 250px;
+            font-weight: bold;
+            color: #333;
+            z-index: 999;
+            text-align: center;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный фон */
+            border-radius: 5px;
+            white-space: nowrap; /* Запрет переноса текста */
+        }
+		
+		.bottom-right-text {
+            position: fixed;
+            right: 8%;
+            bottom: 10%;
+            max-width: 1000px;
+            color: #333; /* Просто цвет текста */
+            font-size: 40px;
+            line-height: 1.5;
+            z-index: 1002;
+            margin: 0;
+            padding: 0; /* Убираем все отступы */
+            background: none; /* Убираем фон */
+            border: none; /* Убираем границы */
+            box-shadow: none; /* Убираем тень */
+            border-radius: 0; /* Убираем скругления */
+        }
+		  .bottom-right-text::before {
+            content: '';
+            display: block;
+            width: 50%;
+            height: 1px;
+            background-color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .container {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 30%;
+            height: 60%;
+            z-index: 1000;
+			cursor: pointer;
+        }
+        
+        .rectangle {
+            width: 100%;
+            height: 100%;
+            background-color: #40E0D0;
+			transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+			transform-origin: bottom left;
+        }
+		.rectangle:hover {
+            background-color: #5F9EA0;
+			transform: scale(1.02);	
+			
+        }
+        
+        .image-overlay {
+            position: absolute;
+            right: 0;
+            top: -40px; /* Изображение вылезает сверху на ...px */
+            width: 80%; /* Ширина изображения */
+            height: 95%; /* Высота изображения */
+            z-index: 1001; /* Поверх прямоугольника */
+			transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: bottom right;
+        }
+		
+		.container:hover .image-overlay {
+            transform: translateX(2.5%) translateY(-2%) scale(1.02);
+        }
+        
+        .image-overlay img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Сохраняет пропорции изображения */
+            display: block;
+        }
+        
+        /* Для демонстрации */
+        .content {
+            padding: 20px;
+            height: 2000px;
+        }
+    </style>
+    <script>
+        var currentAudio = null;
+
+		function playAudio(url) {
+			if (currentAudio) {
+				currentAudio.pause();
+				currentAudio.currentTime = 0;
+			}
+			currentAudio = new Audio(url);
+			currentAudio.play();
+		}
+    </script>
+</head>
+<body>
+    <div class="hello-world">Hello world</div>
+    
+	<div class="bottom-right-text">
+        <p>Когда Лев Толстой писал «Анну Каренину», то, по привычке, не стеснялся вставлять целые диалоги на французском и немецком.
+		Зато с английским языком у графа Толстого всё было не так хорошо. И когда кому-то из героев нужно было заговорить по-английски, хитрожoпый писатель выкручивался просто: «и тут они, короче, начали говорить по-английски» </p>
+    </div>
+	
+    <div class="container">
+        <div class="rectangle"></div>
+        <div class="image-overlay" onclick="playAudio('tolst.mp3')">
+            <img src="Tolstoy.jpg">
+        </div>
+    </div>
+</body>
+</html>
